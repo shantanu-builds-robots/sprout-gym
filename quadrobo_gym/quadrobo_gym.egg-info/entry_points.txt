@@ -1,2 +1,0 @@
-[gym.envs]
-QuadroboEnv-v0 = quadrobo_gym.env:QuadroboEnv

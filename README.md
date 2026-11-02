@@ -1,124 +1,87 @@
-# Quadruped Robot Reinforcement Learning Framework
+# Sprout Gym 🌱
 
-Welcome to the **Quadruped Robot Reinforcement Learning Framework**, a project that combines cutting-edge reinforcement learning techniques with MuJoCo physics simulation to train quadruped robots for stable and efficient locomotion. This framework allows you to experiment with custom environments, dynamic reward functions, and powerful actor-critic models to achieve state-of-the-art results.
+**Sprout couldn't walk. So it learned.**
 
----
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-## **Simulation Video**
+[![Watch the Sprout Gym launch video](docs/media/sprout-gym-launch.jpg)](docs/media/sprout-gym-launch.mp4)
 
+<sub>▶ Click the image for the 20-second launch video.</sub>
 
+Sprout Gym is a custom MuJoCo environment where **Sprout**, a quadruped I designed in SolidWorks
+([shantanuparabumd/quad_robo](https://github.com/shantanuparabumd/quad_robo)), learns to walk with
+**TD3** (Twin Delayed Deep Deterministic Policy Gradient). It goes from tipping over at episode 100 to walking by episode 20,000.
+
+## Training progress
 
 https://github.com/user-attachments/assets/d51b1138-ef5c-40bf-964e-35f496e49969
 
+## How it works
 
----
+| Piece | Details | Where |
+|---|---|---|
+| **Robot** | Sprout's own meshes, 12 position actuators (3 per leg) | `quadrobo_gym/assets/` |
+| **Environment** | `QuadroboEnv-v0`: 124-dim observation (joint positions/velocities, contact forces, roll/pitch/yaw) | `quadrobo_gym/env.py` |
+| **Agent** | TD3 actor–critic: 124 → 256 → 256 → 12, twin critics, delayed policy updates | `models/td3.py`, `configs/model/td3.yaml` |
+| **Config** | Hydra configs for training, environment, model, and rewards | `configs/` |
 
-## **Overview**
+### Reward
 
-This project focuses on teaching a quadruped robot to walk using reinforcement learning techniques. It leverages the **Twin Delayed Deep Deterministic Policy Gradient (TD3)** algorithm within a custom-designed MuJoCo-based environment (`QuadroboEnv`).
+From `QuadroboEnv.step`:
 
-### Key Features:
-- Custom OpenAI Gym-compatible environment.
-- Dynamic reward function emphasizing forward motion, stability, and energy efficiency.
-- TD3 model with tunable parameters.
-- Logging, checkpointing, and evaluation for seamless experimentation.
+| Term | Weight |
+|---|---|
+| Forward velocity | **+5.0** |
+| Forward distance per step | **+7.5** |
+| Staying healthy (torso height in range) | **+1.0** |
+| Sideways drift | **−0.1** |
+| Σ \|joint velocity\| (flailing) | **−0.5** |
+| \|roll\|, \|pitch\|, \|yaw\| | **−0.02, −0.02, −0.05** |
 
----
+An episode ends when the robot is unhealthy, or when roll, pitch, or yaw goes past 60°.
+More in [docs/reward_design.md](docs/reward_design.md).
 
-## **Concept of the Project**
+## Quick start
 
-At its core, this project simulates a quadruped robot tasked with navigating a flat terrain. The robot learns to walk, balance, and optimize its gait through continuous interaction with the environment. A carefully designed reward system encourages the robot to move forward efficiently while penalizing energy wastage, unstable orientations, and off-track movements.
-
----
-
-## **Folder Structure**
-
-The project is well-organized into multiple modules for ease of development and scalability:
-
-```plaintext
-docs/
-├── custom_env.md                 # Documentation for the custom environment
-├── installation_and_troubleshoot.md  # Installation and troubleshooting steps
-├── model_definition.md           # Details of the TD3 model implementation
-├── project_structure.md          # Explanation of the project structure
-├── reward_design.md              # Detailed breakdown of the reward function
-└── training_and_evaluation.md    # Training and evaluation procedures
-```
-
-Refer to the **[Project Structure Documentation](docs/project_structure.md)** for a complete breakdown.
-
----
-
-## **How to Use**
-
-### 1. **Installation**
-Refer to **[Installation and Troubleshooting Documentation](docs/installation_and_troubleshoot.md)** for detailed steps.
-
-Quick start:
-1. Install Miniconda and create a virtual environment:
-   ```bash
-   conda create -n mujoco_openai python=3.10
-   conda activate mujoco_openai
-   ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Install the custom environment:
-   ```bash
-   pip install .
-   ```
-
-### 2. **Training**
-Run the training script to teach the robot:
 ```bash
-python scripts/train.py
+conda create -n quadrobo_env python=3.10 && conda activate quadrobo_env
+pip install -r requirements.txt
+pip install .                 # project packages
+pip install ./quadrobo_gym    # registers QuadroboEnv-v0
+
+python scripts/train.py       # train (settings in configs/config.yaml)
+python scripts/evaluate.py    # watch the latest checkpoint walk
 ```
-Adjust the parameters in the `configs/` directory.
 
-### 3. **Evaluation**
-Evaluate a trained model:
-```bash
-python scripts/evaluate.py
+Checkpoints and plots go to `outputs/`. If the MuJoCo viewer won't open inside conda, see
+[troubleshooting](docs/installation_and_troubleshoot.md).
+
+## Repository layout
+
 ```
-Refer to the **[Training and Evaluation Documentation](docs/training_and_evaluation.md)** for more details.
+├── configs/          Hydra configs: config.yaml + environment/, model/, rewards/
+├── docs/             Guides (install, env, reward, model, training) and media/
+├── environments/     Wrappers used by the scripts (QuadEnv, Ant baseline)
+├── models/           TD3 and a base model with save/load
+├── quadrobo_gym/     The QuadroboEnv-v0 package: env.py, MuJoCo model, meshes
+├── scripts/          train.py, evaluate.py, test_env.py, list_registered_envs.py
+└── utils/            Replay buffer and optional reward shaping
+```
 
----
+Full breakdown: [docs/project_structure.md](docs/project_structure.md).
 
-## **Reward Design**
+## Documentation
 
-The reward function is designed to:
-- Encourage forward motion.
-- Penalize sideways drift and unstable orientation.
-- Promote energy-efficient gait patterns.
-- Reward the robot for maintaining a target velocity and balance.
+- [Installation and troubleshooting](docs/installation_and_troubleshoot.md)
+- [Custom environment](docs/custom_env.md)
+- [Reward design](docs/reward_design.md)
+- [TD3 model](docs/model_definition.md)
+- [Training and evaluation](docs/training_and_evaluation.md)
 
-For a comprehensive explanation, see the **[Reward Design Documentation](docs/reward_design.md)**.
+## Contributing
 
----
+Issues and pull requests are welcome; templates are in `.github/ISSUE_TEMPLATE/`.
 
-## **Custom Environment**
+## License
 
-The `QuadroboEnv` environment is the heart of this project. It is a MuJoCo-based environment designed to simulate the physics of a quadruped robot. The environment provides:
-- Joint positions, velocities, and forces.
-- Orientation feedback (roll, pitch, yaw).
-- Contact forces for each leg.
-
-Details are available in the **[Custom Environment Documentation](docs/custom_env.md)**.
-
----
-
-## **TD3 Model**
-
-The **Twin Delayed Deep Deterministic Policy Gradient (TD3)** algorithm is used to train the robot. The model features:
-- Actor-critic networks for continuous action spaces.
-- Noise injection for exploration.
-- Soft updates to stabilize learning.
-
-Read more in the **[Model Definition Documentation](docs/model_definition.md)**.
-
-
----
-
-
-We welcome contributions and feedback. Feel free to open issues or submit pull requests to improve this project. 🚀
+MIT, see [LICENSE](LICENSE).

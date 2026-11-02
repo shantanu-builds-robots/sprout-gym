@@ -1,4 +1,0 @@
-gymnasium
-hydra-core
-torch
-numpy

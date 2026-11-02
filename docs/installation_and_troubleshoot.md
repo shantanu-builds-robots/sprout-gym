@@ -8,7 +8,7 @@
 2. **Create a Virtual Environment:**
 
    ```bash
-   conda create -n quadrobo_env python=3.12
+   conda create -n quadrobo_env python=3.10
    conda activate quadrobo_env
    ```
 
@@ -26,11 +26,15 @@
 
 5. **Install `quadrobo_gym` Custom Environment:**
 
-   If `quadrobo_gym` is not available via pip, ensure you have access to its source code and install it using:
+   From the repository root:
 
    ```bash
-   pip install /path/to/quadrobo_gym
+   pip install -r requirements.txt
+   pip install .                 # installs models/, utils/, environments/ and quadrobo_gym/
+   pip install ./quadrobo_gym    # registers QuadroboEnv-v0 through the gym.envs entry point
    ```
+
+   Check that it registered with `python scripts/list_registered_envs.py`.
 
 **Note:** Always ensure that your package versions are compatible to prevent such errors. Regularly check the official repositories and documentation for updates and fixes related to these issues. 
 
@@ -60,3 +64,13 @@ This error occurs because, in MuJoCo version 3.0.0, the `solver_iter` attribute 
   Replace instances of `solver_iter` with `solver_niter` in your codebase.
 
 This change is detailed in Gymnasium's GitHub pull request [#746](https://github.com/Farama-Foundation/Gymnasium/pull/746).
+
+**3. MuJoCo viewer fails to open (`ERROR: could not create window`) inside a conda env**
+
+This is usually a `libstdc++` mismatch between the conda env and the system OpenGL drivers. Preloading the system library before launching works around it:
+
+```bash
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+```
+
+MuJoCo writes these viewer errors to `MUJOCO_LOG.TXT` in the working directory (now git-ignored).

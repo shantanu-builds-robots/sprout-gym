@@ -5,10 +5,10 @@ setup(
     version="0.1",
     author="Shantanu Parab",
     author_email="sparab@umd.edu",
-    description="Reinforcement Learning using OpenAI Gym and MuJoCo",
+    description="Sprout Gym: teaching the Sprout quadruped to walk with TD3 in MuJoCo",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/shantanuparabumd/openai_gym_rl",
+    url="https://github.com/shantanuparabumd/sprout-gym",
     packages=find_packages(),
     install_requires=[
         "gymnasium",
