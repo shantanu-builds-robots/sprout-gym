@@ -40,7 +40,7 @@ Scripts for running training, evaluation, and testing.
   - `train.py`: Launches the training process.
   - `evaluate.py`: Evaluates the trained model.
   - `test_env.py`: Tests and debugs environments.
-  - `view_model.py`: Visualizes the model.
+  - `list_registered_envs.py`: Prints every environment ID registered with `gym` (useful to confirm `QuadroboEnv-v0` is installed).
 
 #### **6. `outputs/`**
 Stores logs, metrics, and checkpoints generated during training and evaluation.
@@ -57,12 +57,13 @@ Stores logs, metrics, and checkpoints generated during training and evaluation.
 Implements and registers the Quadrobo custom Gym environment.
 
 - **Files**:
-  - `env.py`: Defines the `QuadroboEnv` class.
-  - `setup.py`: Setup script to register the environment.
-  - `register.py`: Handles registration logic.
+  - `env.py`: Defines the `QuadroboEnv` class (reward, termination, observations).
+  - `__init__.py`: Registers `QuadroboEnv-v0` with `gym` on import.
+  - `setup.py`: Installs the package and exposes it through the `gym.envs` entry point.
+  - `assets/`: The MuJoCo model (`quad_robo.xml`) and Sprout's STL meshes.
 
-#### **8. `videos/`**
-Stores recorded videos of evaluations for visualization (`evaluation_demo.webm`).
+#### **8. `docs/media/`**
+Images and videos used by the documentation: the Sprout Gym launch video, an early training-metrics plot, and an Ant baseline evaluation recording (`ant_baseline_evaluation.webm`).
 
 #### **9. `logs/`**
 Holds debugging and runtime logs.

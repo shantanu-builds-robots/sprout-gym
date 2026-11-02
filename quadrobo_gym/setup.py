@@ -1,4 +1,8 @@
+import os
 from setuptools import setup, find_packages
+
+_readme = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "README.md")
+long_description = open(_readme).read() if os.path.exists(_readme) else ""
 
 setup(
     name="quadrobo_gym",
@@ -6,7 +10,7 @@ setup(
     author="Shantanu Parab",
     author_email="sparab@umd.edu",
     description="Custom MuJoCo-based quadruped robot environment for OpenAI Gym",
-    long_description=open("README.md").read(),
+    long_description=long_description,
     long_description_content_type="text/markdown",
     packages=find_packages(),
     install_requires=[
@@ -23,7 +27,7 @@ setup(
     package_data={
         "quadrobo_gym": [
             "assets/*.xml",
-            "assets/meshes/*.stl"
+            "assets/meshes/*.STL"
         ],
     },
     classifiers=[
