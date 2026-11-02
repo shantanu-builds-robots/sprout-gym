@@ -4,9 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[![Watch the Sprout Gym launch video](docs/media/sprout-gym-launch.jpg)](docs/media/sprout-gym-launch.mp4)
-
-<sub>▶ Click the image for the 20-second launch video.</sub>
+https://github.com/user-attachments/assets/8f91cb60-bef9-4fa4-9049-b5246b1ea295
 
 Sprout Gym is a custom MuJoCo environment where **Sprout**, a quadruped I designed in SolidWorks
 ([shantanuparabumd/quad_robo](https://github.com/shantanuparabumd/quad_robo)), learns to walk with
