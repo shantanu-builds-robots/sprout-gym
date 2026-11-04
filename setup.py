@@ -8,7 +8,7 @@ setup(
     description="Sprout Gym: teaching the Sprout quadruped to walk with TD3 in MuJoCo",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/shantanuparabumd/sprout-gym",
+    url="https://github.com/shantanu-builds-robots/sprout-gym",
     packages=find_packages(),
     install_requires=[
         "gymnasium",

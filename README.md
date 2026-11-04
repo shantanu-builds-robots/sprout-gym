@@ -7,7 +7,7 @@
 https://github.com/user-attachments/assets/8f91cb60-bef9-4fa4-9049-b5246b1ea295
 
 Sprout Gym is a custom MuJoCo environment where **Sprout**, a quadruped I designed in SolidWorks
-([shantanuparabumd/quad_robo](https://github.com/shantanuparabumd/quad_robo)), learns to walk with
+([shantanu-builds-robots/quad_robo](https://github.com/shantanu-builds-robots/quad_robo)), learns to walk with
 **TD3** (Twin Delayed Deep Deterministic Policy Gradient). It goes from tipping over at episode 100 to walking by episode 20,000.
 
 ## Training progress
