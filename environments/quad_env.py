@@ -5,7 +5,7 @@ from utils.rewards import calculate_reward
 
 class QuadEnv:
     def __init__(self, env_config, reward_config):
-        """Initialize the Ant environment with custom configurations.
+        """Initialize the Quadrobo environment with custom configurations.
 
         Args:
             env_config: Configuration dictionary for the environment.

@@ -6,7 +6,7 @@ Contains configuration files to customize the environment, model, and reward set
 - **Files**:
   - `config.yaml`: Main configuration file that combines all settings.
   - **Subfolders**:
-    - `environment/`: Contains specific configurations for environments (`ant.yaml`, `quadrobo.yaml`).
+    - `environment/`: Contains specific configurations for environments (`quadrobo.yaml`).
     - `model/`: Defines hyperparameters for models (`td3.yaml`).
     - `rewards/`: Reward shaping configurations (`rewards.yaml`).
 
@@ -14,7 +14,6 @@ Contains configuration files to customize the environment, model, and reward set
 Contains the implementation of custom MuJoCo environments.
 
 - **Files**:
-  - `ant_env.py`: Code for the Ant environment.
   - `quad_env.py`: Code for the Quadrobo environment.
 - **Purpose**:
   - Provides the simulation logic and state transitions for each environment.
@@ -63,7 +62,7 @@ Implements and registers the Quadrobo custom Gym environment.
   - `assets/`: The MuJoCo model (`quad_robo.xml`) and Sprout's STL meshes.
 
 #### **8. `docs/media/`**
-Images and videos used by the documentation: the Sprout Gym launch video, an early training-metrics plot, and an Ant baseline evaluation recording (`ant_baseline_evaluation.webm`).
+Images and videos used by the documentation: the Sprout Gym launch video and an early training-metrics plot.
 
 #### **9. `logs/`**
 Holds debugging and runtime logs.

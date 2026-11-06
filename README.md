@@ -59,7 +59,7 @@ Checkpoints and plots go to `outputs/`. If the MuJoCo viewer won't open inside c
 ```
 ├── configs/          Hydra configs: config.yaml + environment/, model/, rewards/
 ├── docs/             Guides (install, env, reward, model, training) and media/
-├── environments/     Wrappers used by the scripts (QuadEnv, Ant baseline)
+├── environments/     Wrappers used by the scripts (QuadEnv)
 ├── models/           TD3 and a base model with save/load
 ├── quadrobo_gym/     The QuadroboEnv-v0 package: env.py, MuJoCo model, meshes
 ├── scripts/          train.py, evaluate.py, test_env.py, list_registered_envs.py
