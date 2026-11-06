@@ -1,0 +1,11 @@
+# Runtime dependencies (unpinned; see docs/installation_and_troubleshoot.md).
+# quadrobo_gym/env.py and environments/quad_env.py use the legacy `gym` API
+# (0.26 step/reset signatures); environments/ and scripts/test_env.py use `gymnasium`.
+gym>=0.26
+gymnasium[mujoco]
+mujoco
+torch
+numpy<2
+hydra-core
+omegaconf
+matplotlib

@@ -1,0 +1,28 @@
+defaults:
+  - _self_
+  - environment: quadrobo
+  - model: td3
+  - rewards: rewards
+
+seed: 42
+
+training:
+  episodes: 100000               # Total number of training episodes
+  max_steps: 1000             # Max steps per episode
+  render_mode: "rgb_array"    # Rendering mode during training
+  resume: true               # Resume training from the latest checkpoint
+  overwrite: false            # Overwrite existing checkpoints if true
+  warmup_steps: 1000         # Number of random steps to populate the replay buffer
+
+evaluation:
+  episodes: 20         # Number of episodes to evaluate
+  max_steps: 2000        # Max steps per episode
+  render_mode: "human"   # Rendering mode for evaluation
+
+logging:
+  level: INFO
+  save_dir: outputs/checkpoints_trot_gait/  # Directory for saving checkpoints and logs
+  log_freq: 5                       # Log training progress every 5 episodes
+  checkpoint_freq: 10               # Save checkpoint every 10 episodes
+  metrics_file: outputs/metrics.png         # File name for saving training metrics
+  contact_forces_file: outputs/contact_forces.png  # File name for saving contact forces plot
